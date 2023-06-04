@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "ODL-azure-971715" {
+resource "azurerm_resource_group" "resource-group" {
   name     = var.name
   location = var.location
 }

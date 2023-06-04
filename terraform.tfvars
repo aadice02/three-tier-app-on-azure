@@ -1,4 +1,4 @@
-name = "ODL-azure-971715"
+name = "ODL-azure-971911"
 location = "East US"
 vnetcidr = "192.168.0.0/16"
 websubnetcidr = "192.168.1.0/24"
