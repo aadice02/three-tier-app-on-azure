@@ -1,3 +1,9 @@
+resource "random_password" "vm_password" {
+length = 16
+special = true
+override_special = "_@%"
+}
+
 resource "azurerm_availability_set" "web_availabilty_set" {
   name                = "web_availabilty_set"
   location            = var.location
@@ -28,7 +34,7 @@ resource "azurerm_virtual_machine" "web-vm" {
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "20.04-LTS"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
 
@@ -42,7 +48,8 @@ resource "azurerm_virtual_machine" "web-vm" {
   os_profile {
     computer_name = var.web_host_name
     admin_username = var.web_username
-    admin_password = var.web_os_password
+#    admin_password = var.web_os_password
+    admin_password = random_password.vm_password.result
   }
 
   os_profile_linux_config {
@@ -75,13 +82,13 @@ resource "azurerm_virtual_machine" "app-vm" {
   resource_group_name = var.resource_group
   network_interface_ids = [ azurerm_network_interface.app-net-interface.id ]
   availability_set_id = azurerm_availability_set.web_availabilty_set.id
-  vm_size = "Standard_D2s_v3"
+  vm_size = "Standard_B2s"
   delete_os_disk_on_termination = true
   
   storage_image_reference {
     publisher = "Canonical"
     offer     = "UbuntuServer"
-    sku       = "20.04-LTS"
+    sku       = "18.04-LTS"
     version   = "latest"
   }
 
@@ -95,7 +102,8 @@ resource "azurerm_virtual_machine" "app-vm" {
   os_profile {
     computer_name = var.app_host_name
     admin_username = var.app_username
-    admin_password = var.app_os_password
+#    admin_password = var.app_os_password
+    admin_password = random_password.vm_password.result
   }
 
   os_profile_linux_config {
