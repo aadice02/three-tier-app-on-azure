@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Install Azure CLI (uncomment the line below if Azure CLI is not installed)
-# az --version || curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
 VMNAME=$3
 RESOURCEGROUPNAME=$2
 # Get the instance metadata
